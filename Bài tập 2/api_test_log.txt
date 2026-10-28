@@ -1,0 +1,115 @@
+```text
+BANK MARKETING API TEST LOG
+============================
+
+API Endpoint:
+POST http://127.0.0.1:5000/predict
+
+Model:
+bank-marketing-rf-v1.0
+
+Threshold:
+0.20
+
+
+TEST 1 - VALID REQUEST - HIGH PROBABILITY
+------------------------------------------
+
+Input:
+Customer profile with age=25, job=student, balance=469,
+contact=cellular, duration=524, previous=2, poutcome=success.
+
+Response:
+prediction         : 1
+probability        : 0.935
+threshold          : 0.2
+model_version      : bank-marketing-rf-v1.0
+opportunity_level  : High
+
+Result:
+SUCCESS
+
+
+TEST 2 - VALID REQUEST - LOW PROBABILITY
+-----------------------------------------
+
+Input:
+Customer profile with age=44, job=technician, balance=378,
+contact=unknown, duration=203, previous=0, poutcome=unknown.
+
+Response:
+prediction         : 0
+probability        : 0.0
+threshold          : 0.2
+model_version      : bank-marketing-rf-v1.0
+opportunity_level  : Low
+
+Result:
+SUCCESS
+
+
+TEST 3 - VALID REQUEST - MEDIUM PROBABILITY
+--------------------------------------------
+
+Input:
+Customer profile with age=35, job=management, balance=1500,
+contact=cellular, duration=600, previous=0, poutcome=unknown.
+
+Response:
+prediction         : 1
+probability        : 0.415
+threshold          : 0.2
+model_version      : bank-marketing-rf-v1.0
+opportunity_level  : Medium
+
+Result:
+SUCCESS
+
+
+TEST 4 - INVALID REQUEST - MISSING FEATURE
+-------------------------------------------
+
+Input:
+Valid JSON request but the required feature "age" was removed.
+
+Response:
+HTTP 400
+
+{
+  "error": "Thiếu feature bắt buộc",
+  "missing_features": [
+    "age"
+  ]
+}
+
+Result:
+ERROR HANDLING SUCCESS
+
+
+TEST 5 - INVALID REQUEST - INVALID JSON
+----------------------------------------
+
+Input:
+abc
+
+Response:
+HTTP 400
+
+{
+  "error": "400 Bad Request: Failed to decode JSON object:
+  Expecting value: line 1 column 1 (char 0)"
+}
+
+Result:
+ERROR HANDLING SUCCESS
+
+
+SUMMARY
+=======
+
+Total requests tested: 5
+Valid requests: 3
+Invalid requests: 2
+
+All API tests completed successfully.
+```
